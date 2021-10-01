@@ -8,7 +8,7 @@ function run(cfg) {
 
     registerEventHandler(config, client, player);
     registerPlayerEvents(player);
-    registerCommands(config);
+    registerCommands(config, client);
 
     client.login(config.token);
 }
@@ -24,7 +24,11 @@ function registerEventHandler(config, client, player) {
         const path = `../events/${file}`;
         try {
             const handler = require(path);
-            client.on(name, (...args) => handler({ config, client, player }, ...args));
+            client.on(name, (...args) => {
+                try {
+                    handler({ config, client, player }, ...args);
+                } catch (err) {}
+            });
             delete require.cache[require.resolve(path)];
         } catch (err) {
             console.error(`>> ❌ 事件處理器 ${name} 載入失敗`);

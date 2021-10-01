@@ -5,13 +5,13 @@ module.exports = {
     voice: true,
 
     execute({ player, msg }) {
-        const queue = player.getQueue(msg.guild.id);
+        const queue = player.getQueue(interaction.guildId);
 
-        if (!queue || !queue.playing) return msg.channel.send(`❌ ${msg.author} 目前沒有正在播放的歌曲喔`);
+        if (!queue || !queue.playing) return interaction.reply(`❌ ${interaction.user} 目前沒有正在播放的歌曲喔`);
 
         const success = queue.skip();
 
-        if (success) return msg.channel.send(`跳過歌曲: ${queue.current.title}`);
-        return msg.channel.send(`❌ ${msg.author} 跳過歌曲時發生錯誤`);
+        if (success) return interaction.reply(`跳過歌曲: ${queue.current.title}`);
+        return interaction.reply(`❌ ${interaction.user} 跳過歌曲時發生錯誤`);
     },
 };

@@ -2,7 +2,7 @@ const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const fs = require("fs");
 
-async function registerCommands(config) {
+async function registerCommands(config, client) {
     const commands = [];
     const commandFiles = fs.readdirSync("./commands").filter((file) => file.endsWith(".js"));
 
@@ -14,7 +14,9 @@ async function registerCommands(config) {
     const rest = new REST({ version: "9" }).setToken(config.token);
 
     try {
-        await rest.put(Routes.applicationCommands(config.id), { body: commands });
+        const result = await rest.put(Routes.applicationCommands(config.id), { body: commands });
+        // console.log(result);
+        client.commands = commands;
         console.log("成功註冊指令");
     } catch (error) {
         console.error(error);
