@@ -1,0 +1,4 @@
+tasks:
+  - before: nvm install 16
+    init: npm install
+    command: clear && node --version && npm --version
