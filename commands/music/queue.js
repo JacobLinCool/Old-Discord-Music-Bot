@@ -1,4 +1,5 @@
 const { SlashCommandSubcommandBuilder } = require("@discordjs/builders");
+const { MessageEmbed } = require("discord.js");
 
 const data = new SlashCommandSubcommandBuilder().setName("queue").setDescription("顯示儲列資訊");
 
@@ -15,8 +16,8 @@ async function run({ client, player, interaction }) {
     const embed = new MessageEmbed();
     embed
         .setColor("#ECEFF4")
-        .setThumbnail(msg.guild.iconURL({ size: 2048, dynamic: true }))
-        .setAuthor(`${msg.guild.name} 目前循環模式: ${methods[queue.repeatMode]}`, client.user.displayAvatarURL({ size: 1024, dynamic: true }))
+        .setThumbnail(interaction.guild.iconURL({ size: 2048, dynamic: true }))
+        .setAuthor(`${interaction.guild.name} 目前循環模式: ${methods[queue.repeatMode]}`, client.user.displayAvatarURL({ size: 1024, dynamic: true }))
         .setDescription(`正在播放 ${queue.current.title}\n\n${tracks.slice(0, 5).join("\n")}\n\n${moreSongs}`)
         .setTimestamp()
         .setFooter(queue.playing ? `🎵 正在播放: ${queue.current.title}` : "暫停中", interaction.user.avatarURL({ dynamic: true }));

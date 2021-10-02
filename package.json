@@ -6,7 +6,7 @@
   "author": "JacobLinCool",
   "scripts": {
     "start": "node index.js",
-    "format": "prettier --write \"src/**/*.js\" \"evt/**/*.js\" \"cmd/**/*.js\""
+    "format": "prettier --write \"src/**/*.js\" \"events/**/*.js\" \"commands/**/*.js\""
   },
   "dependencies": {
     "@discord-player/extractor": "^3.0.2",

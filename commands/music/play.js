@@ -7,7 +7,7 @@ const data = new SlashCommandSubcommandBuilder()
     .addStringOption((option) => option.setName("url").setDescription("輸入 URL 或查詢文字").setRequired(true));
 
 async function run({ player, interaction }) {
-    await interaction.deferReply();
+    await interaction.reply("等一下喔");
     const res = await player.search(interaction.options.getString("url"), { requestedBy: interaction.member, searchEngine: QueryType.AUTO });
     if (!res || !res.tracks.length) return interaction.editReply(`❌ ${interaction.user} 無相符之查詢結果`);
 
