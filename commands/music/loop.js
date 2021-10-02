@@ -23,11 +23,11 @@ async function run({ player, interaction }) {
     const mode = interaction.options.getString("模式");
 
     if (mode === "all" || mode === "a") {
-        if (queue.repeatMode === QueueRepeatMode.QUEUE) return interaction.reply(`${interaction.user} 現在循環播放設定已經是**全部歌曲**了`);
+        if (queue.repeatMode === QueueRepeatMode.QUEUE) return interaction.reply(`${interaction.user} 現在循環播放設定已經是**全部循環**了`);
 
         const success = queue.setRepeatMode(QueueRepeatMode.QUEUE);
 
-        if (success) return interaction.reply(`循環播放設定已更新為 **全部歌曲**`);
+        if (success) return interaction.reply(`循環播放設定已更新為 **全部循環**`);
         return interaction.reply(`❌ ${interaction.user} 循環播放設置發生錯誤`);
     } else if (mode === "single" || mode === "s") {
         if (queue.repeatMode === QueueRepeatMode.TRACK) return interaction.reply(`${interaction.user} 現在循環播放設定已經是**單曲循環**了`);
@@ -45,10 +45,10 @@ async function run({ player, interaction }) {
         return interaction.reply(`❌ ${interaction.user} 循環播放設置發生錯誤`);
     } else {
         let current = "";
-        if (queue.repeatMode === QueueRepeatMode.QUEUE) current = "全部歌曲";
+        if (queue.repeatMode === QueueRepeatMode.QUEUE) current = "全部循環";
         if (queue.repeatMode === QueueRepeatMode.TRACK) current = "單曲循環";
         if (queue.repeatMode === QueueRepeatMode.OFF) current = "關閉";
-        return interaction.reply(`目前循環播放設定是 **${current}**\n如要改變模式，請使用 ${config.prefix}loop <mode> \nmode = single(s), all(a), off`);
+        return interaction.reply(`目前循環播放設定是 **${current}**`);
     }
 }
 
