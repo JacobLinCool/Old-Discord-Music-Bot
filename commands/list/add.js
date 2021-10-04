@@ -9,7 +9,7 @@ const data = new SlashCommandSubcommandBuilder()
     .setName("add")
     .setDescription("在已存在列表中新增項目")
     .addStringOption((option) => option.setName("名稱").setDescription("列表名稱").setRequired(true))
-    .addStringOption((option) => option.setName("Youtube ID").setDescription("Youtube ID 或網址，以「,」分割").setRequired(true));
+    .addStringOption((option) => option.setName("youtube_id").setDescription("Youtube ID 或網址，以「,」分割").setRequired(true));
 
 async function run({ player, interaction }) {
     await interaction.deferReply();
@@ -21,7 +21,7 @@ async function run({ player, interaction }) {
     if (!list) return await interaction.editReply("此列表並不存在");
 
     const raw = interaction.options
-        .getString("Youtube ID")
+        .getString("youtube_id")
         .split(",")
         .map((x) => x.trim());
     const id = [];

@@ -9,7 +9,7 @@ const data = new SlashCommandSubcommandBuilder()
     .setName("create")
     .setDescription("製作新列表")
     .addStringOption((option) => option.setName("名稱").setDescription("列表名稱").setRequired(true))
-    .addStringOption((option) => option.setName("Youtube ID").setDescription("Youtube ID 或網址，以「,」分割").setRequired(false));
+    .addStringOption((option) => option.setName("youtube_id").setDescription("Youtube ID 或網址，以「,」分割").setRequired(false));
 
 async function run({ player, interaction }) {
     await interaction.deferReply();
@@ -19,7 +19,7 @@ async function run({ player, interaction }) {
     if (await client.get(`${interaction.guildId}-${name}`)) return await interaction.editReply("此列表名稱已存在");
 
     const raw = interaction.options
-        .getString("Youtube ID")
+        .getString("youtube_id")
         .split(",")
         .map((x) => x.trim());
     const id = [];
