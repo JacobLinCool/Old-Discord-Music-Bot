@@ -19,7 +19,8 @@
     "ffmpeg-static": "^4.4.0",
     "koa": "^2.13.3",
     "node-fetch": "^2.6.5",
-    "opusscript": "0.0.8"
+    "opusscript": "0.0.8",
+    "os-utils": "0.0.14"
   },
   "devDependencies": {
     "discord-api-types": "^0.23.1",

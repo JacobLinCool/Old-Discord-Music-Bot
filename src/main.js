@@ -11,6 +11,13 @@ function run(cfg) {
     registerCommands(config, client);
 
     client.login(config.token);
+
+    return {
+        start: new Date(),
+        client,
+        player,
+        config,
+    };
 }
 
 function registerEventHandler(config, client, player) {
