@@ -6,7 +6,7 @@ const data = new SlashCommandSubcommandBuilder().setName("now").setDescription("
 async function run({ client, player, interaction }) {
     const queue = player.getQueue(interaction.guildId);
 
-    if (!queue || !queue.playing) return interaction.reply(`❌ ${interaction.user} 目前沒有正在播放的歌曲喔`);
+    if (!queue || !queue.playing) return await interaction.reply(`❌ ${interaction.user} 目前沒有正在播放的歌曲喔`);
 
     const track = queue.current;
     const methods = ["關閉", "單曲循環", "全部歌曲"];
@@ -23,7 +23,7 @@ async function run({ client, player, interaction }) {
         .setTimestamp()
         .setFooter(`🎵 正在播放: ${track.title}`, interaction.user.avatarURL({ dynamic: true }));
 
-    interaction.reply({ embeds: [embed] });
+    await interaction.reply({ embeds: [embed] });
 }
 
 module.exports = { data, run };

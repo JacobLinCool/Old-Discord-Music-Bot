@@ -26,6 +26,6 @@ module.exports = async ({ config, client, player }, interaction) => {
             if (interaction) await interaction.reply("未知的指令");
         }
     } catch (err) {
-        console.error(err);
+        console.error(interaction.commandName, err);
     }
 };

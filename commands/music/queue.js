@@ -5,9 +5,8 @@ const data = new SlashCommandSubcommandBuilder().setName("queue").setDescription
 
 async function run({ client, player, interaction }) {
     const queue = player.getQueue(interaction.guildId);
-
-    if (!queue) return interaction.reply(`❌ ${interaction.user} 儲列中沒有任何歌曲喔`);
-    if (!queue.tracks[0]) return interaction.reply(`❌ ${interaction.user} 播完現在這首儲列中就沒歌曲了喔`);
+    if (!queue) return await interaction.reply(`❌ ${interaction.user} 儲列中沒有任何歌曲喔`);
+    if (!queue.tracks[0]) return await interaction.reply(`❌ ${interaction.user} 播完現在這首儲列中就沒歌曲了喔`);
 
     const methods = ["關閉", "單曲循環", "全部歌曲"];
     const tracks = queue.tracks.map((track, i) => `**${i + 1}** - ${track.title} | ${track.author} (由 ${track.requestedBy.username} 添加)`);
@@ -22,7 +21,7 @@ async function run({ client, player, interaction }) {
         .setTimestamp()
         .setFooter(queue.playing ? `🎵 正在播放: ${queue.current.title}` : "暫停中", interaction.user.avatarURL({ dynamic: true }));
 
-    interaction.reply({ embeds: [embed] });
+    await interaction.reply({ embeds: [embed] });
 }
 
 module.exports = { data, run };

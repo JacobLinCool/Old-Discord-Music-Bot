@@ -8,10 +8,7 @@ function commandHelps(commands) {
         .join("\n");
 }
 
-const name = "help";
-const description = "提示你有哪些指令可以用";
-
-const data = new SlashCommandBuilder().setName(name).setDescription(description);
+const data = new SlashCommandBuilder().setName("help").setDescription("提示你有哪些指令可以用");
 
 async function run({ client, interaction }) {
     const embed = new MessageEmbed();

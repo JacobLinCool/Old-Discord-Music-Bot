@@ -18,37 +18,37 @@ const data = new SlashCommandSubcommandBuilder()
 async function run({ player, interaction }) {
     const queue = player.getQueue(interaction.guildId);
 
-    if (!queue) return interaction.reply(`❌ ${interaction.user} 儲列中沒有任何歌曲喔`);
+    if (!queue) return await interaction.reply(`❌ ${interaction.user} 儲列中沒有任何歌曲喔`);
 
     const mode = interaction.options.getString("模式");
 
     if (mode === "all" || mode === "a") {
-        if (queue.repeatMode === QueueRepeatMode.QUEUE) return interaction.reply(`${interaction.user} 現在循環播放設定已經是**全部循環**了`);
+        if (queue.repeatMode === QueueRepeatMode.QUEUE) return await interaction.reply(`${interaction.user} 現在循環播放設定已經是**全部循環**了`);
 
         const success = queue.setRepeatMode(QueueRepeatMode.QUEUE);
 
-        if (success) return interaction.reply(`循環播放設定已更新為 **全部循環**`);
-        return interaction.reply(`❌ ${interaction.user} 循環播放設置發生錯誤`);
+        if (success) return await interaction.reply(`循環播放設定已更新為 **全部循環**`);
+        return await interaction.reply(`❌ ${interaction.user} 循環播放設置發生錯誤`);
     } else if (mode === "single" || mode === "s") {
-        if (queue.repeatMode === QueueRepeatMode.TRACK) return interaction.reply(`${interaction.user} 現在循環播放設定已經是**單曲循環**了`);
+        if (queue.repeatMode === QueueRepeatMode.TRACK) return await interaction.reply(`${interaction.user} 現在循環播放設定已經是**單曲循環**了`);
 
         const success = queue.setRepeatMode(QueueRepeatMode.TRACK);
 
-        if (success) return interaction.reply(`循環播放設定已更新為 **單曲循環**`);
-        return interaction.reply(`❌ ${interaction.user} 循環播放設置發生錯誤`);
+        if (success) return await interaction.reply(`循環播放設定已更新為 **單曲循環**`);
+        return await interaction.reply(`❌ ${interaction.user} 循環播放設置發生錯誤`);
     } else if (mode === "off") {
-        if (queue.repeatMode === QueueRepeatMode.OFF) return interaction.reply(`${interaction.user} 現在循環播放設定已經是**關閉**了`);
+        if (queue.repeatMode === QueueRepeatMode.OFF) return await interaction.reply(`${interaction.user} 現在循環播放設定已經是**關閉**了`);
 
         const success = queue.setRepeatMode(QueueRepeatMode.OFF);
 
-        if (success) return interaction.reply(`循環播放設定已更新為 **關閉**`);
-        return interaction.reply(`❌ ${interaction.user} 循環播放設置發生錯誤`);
+        if (success) return await interaction.reply(`循環播放設定已更新為 **關閉**`);
+        return await interaction.reply(`❌ ${interaction.user} 循環播放設置發生錯誤`);
     } else {
         let current = "";
         if (queue.repeatMode === QueueRepeatMode.QUEUE) current = "全部循環";
         if (queue.repeatMode === QueueRepeatMode.TRACK) current = "單曲循環";
         if (queue.repeatMode === QueueRepeatMode.OFF) current = "關閉";
-        return interaction.reply(`目前循環播放設定是 **${current}**`);
+        return await interaction.reply(`目前循環播放設定是 **${current}**`);
     }
 }
 

@@ -10,8 +10,7 @@ async function run({ player, interaction }) {
     await interaction.reply("等一下喔");
 
     const queue = player.getQueue(interaction.guildId);
-
-    if (!queue || !queue.playing) return interaction.editReply(`❌ ${interaction.user} 目前沒有正在播放的歌曲喔`);
+    if (!queue || !queue.playing) return await interaction.editReply(`❌ ${interaction.user} 目前沒有正在播放的歌曲喔`);
 
     const options = replace(interaction.options.getString("options"));
 
@@ -21,7 +20,7 @@ async function run({ player, interaction }) {
     filter[options] = true;
     const success = queue.setFilters(filter);
 
-    if (success) interaction.editReply("濾波器已設定至：" + options);
+    if (success) await interaction.editReply("濾波器已設定至：" + options);
 }
 
 function replace(options) {
