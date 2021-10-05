@@ -28,22 +28,22 @@ async function run({ interaction }) {
             try {
                 if (x.includes("-")) {
                     x = x.split("-").map((x) => parseInt(x.trim()));
-                    if (typeof x[0] === "number" && typeof x[1] === "number" && x[0] >= 0 && x[1] < list.list.length) {
+                    if (typeof x[0] === "number" && typeof x[1] === "number" && x[0] >= 1 && x[1] <= list.list.length) {
                         for (let i = x[0]; i <= x[1]; i++) items.add(i);
                     }
                 } else {
                     x = parseInt(x);
-                    if (typeof x === "number" && x >= 0 && x < list.list.length) items.add(x);
+                    if (typeof x === "number" && x >= 1 && x <= list.list.length) items.add(x);
                 }
             } catch (err) {}
         });
 
     const old_length = list.list.length;
-    list.list = list.list.map((x, i) => (items.has(i) ? undefined : x)).filter((x) => x !== undefined);
-    const add_length = list.list.length - old_length;
+    list.list = list.list.map((x, i) => (items.has(i+1) ? undefined : x)).filter((x) => x !== undefined);
+    const remove_length = old_length - list.list.length;
 
     await client.set(`${interaction.guildId}-${name}`, list);
-    await interaction.editReply(`列表「**${name}**」已更新 - 已刪除 **${add_length}** 個項目`);
+    await interaction.editReply(`列表「**${name}**」已更新 - 已刪除 **${remove_length}** 個項目`);
 }
 
 module.exports = { data, run };

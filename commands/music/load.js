@@ -39,7 +39,7 @@ async function run({ player, interaction }) {
 
     if (!queue.playing) await queue.play();
 
-    return await interaction.editReply("所有項目皆已加入");
+    return await interaction.editReply(`已加入 **${tracks.length}** 個項目`);
 }
 
 module.exports = { data, run };
