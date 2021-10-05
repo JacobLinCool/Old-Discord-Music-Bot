@@ -2,7 +2,7 @@ const { SlashCommandSubcommandBuilder } = require("@discordjs/builders");
 const Client = require("@replit/database");
 const ENV = require("dotenv").config().parsed || {};
 
-const client = new Client(ENV.REPLIT_DB_URL || process.env.REPLIT_DB_URL);
+const client = new Client(process.env.REPLIT_DB_URL || ENV.REPLIT_DB_URL);
 
 const data = new SlashCommandSubcommandBuilder()
     .setName("remove")
@@ -39,7 +39,7 @@ async function run({ interaction }) {
         });
 
     const old_length = list.list.length;
-    list.list = list.list.map((x, i) => (items.has(i+1) ? undefined : x)).filter((x) => x !== undefined);
+    list.list = list.list.map((x, i) => (items.has(i + 1) ? undefined : x)).filter((x) => x !== undefined);
     const remove_length = old_length - list.list.length;
 
     await client.set(`${interaction.guildId}-${name}`, list);

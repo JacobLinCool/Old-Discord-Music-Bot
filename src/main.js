@@ -5,8 +5,9 @@ const { registerCommands } = require("./commands");
 
 function run(cfg) {
     const { config, client, player } = setup(cfg);
+    const game = {};
 
-    registerEventHandler(config, client, player);
+    registerEventHandler(config, client, player, game);
     registerPlayerEvents(player);
     registerCommands(config, client);
 
@@ -17,10 +18,11 @@ function run(cfg) {
         client,
         player,
         config,
+        game,
     };
 }
 
-function registerEventHandler(config, client, player) {
+function registerEventHandler(config, client, player, game) {
     console.log(`正在載入事件處理器...`);
 
     const events = readdirSync("./events/").filter((file) => file.endsWith(".js"));
@@ -33,7 +35,7 @@ function registerEventHandler(config, client, player) {
             const handler = require(path);
             client.on(name, (...args) => {
                 try {
-                    handler({ config, client, player }, ...args);
+                    handler({ config, client, player, game }, ...args);
                 } catch (err) {}
             });
             delete require.cache[require.resolve(path)];

@@ -2,9 +2,10 @@ const { SlashCommandSubcommandBuilder } = require("@discordjs/builders");
 
 const data = new SlashCommandSubcommandBuilder().setName("resume").setDescription("繼續播放歌曲");
 
-async function run({ player, interaction }) {
+async function run({ game, player, interaction }) {
     const queue = player.getQueue(interaction.guildId);
     if (!queue) return await interaction.reply(`❌ ${interaction.user} 儲列中沒有任何歌曲喔`);
+    if (game[interaction.guildId]) return await interaction.reply(`❌ ${interaction.user} 遊戲進行中，此操作已禁止`);
 
     const success = queue.setPaused(false);
 

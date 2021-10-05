@@ -14,14 +14,14 @@ fs.readdirSync("./commands")
         }
     });
 
-module.exports = async ({ config, client, player }, interaction) => {
+module.exports = async ({ game, config, client, player }, interaction) => {
     if (!interaction.isCommand()) return;
 
     try {
         console.log(`Processing /${interaction.commandName.trim().toLowerCase()}`);
         if (commands.has(interaction.commandName.trim().toLowerCase())) {
             const command = commands.get(interaction.commandName.trim().toLowerCase());
-            await command.run({ config, client, player, interaction });
+            await command.run({ game, config, client, player, interaction });
         } else {
             if (interaction) await interaction.reply("未知的指令");
         }

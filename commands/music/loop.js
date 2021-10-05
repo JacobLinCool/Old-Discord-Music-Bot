@@ -15,10 +15,11 @@ const data = new SlashCommandSubcommandBuilder()
             .addChoice("目前狀態", "current"),
     );
 
-async function run({ player, interaction }) {
+async function run({ game, player, interaction }) {
     const queue = player.getQueue(interaction.guildId);
 
     if (!queue) return await interaction.reply(`❌ ${interaction.user} 儲列中沒有任何歌曲喔`);
+    if (game[interaction.guildId]) return await interaction.reply(`❌ ${interaction.user} 遊戲進行中，此操作已禁止`);
 
     const mode = interaction.options.getString("模式");
 

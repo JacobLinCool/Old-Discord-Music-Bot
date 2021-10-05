@@ -19,7 +19,8 @@ async function run({ config, client, player, interaction }) {
     if (!subname) return await interaction.reply("請輸入子指令");
     try {
         await subcommands[subname].run({ config, client, player, interaction });
-    } catch {
+    } catch (err) {
+        console.error(err);
         await interaction.reply("子指令錯誤");
     }
 }

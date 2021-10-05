@@ -1,25 +1,34 @@
 const { SlashCommandSubcommandBuilder } = require("@discordjs/builders");
 const Client = require("@replit/database");
 const { QueryType } = require("discord-player");
+const GM = require("../../src/game");
 const ENV = require("dotenv").config().parsed || {};
 
 const client = new Client(process.env.REPLIT_DB_URL || ENV.REPLIT_DB_URL);
 
 const data = new SlashCommandSubcommandBuilder()
-    .setName("load")
-    .setDescription("從列表中載入歌曲")
-    .addStringOption((option) => option.setName("名稱").setDescription("列表名稱").setRequired(true));
+    .setName("start")
+    .setDescription("開始遊戲")
+    .addStringOption((option) => option.setName("列表").setDescription("遊戲資料列表").setRequired(true))
+    .addStringOption((option) => option.setName("秒數").setDescription("單一歌曲的秒數").setRequired(false));
 
 async function run({ game, player, interaction }) {
     await interaction.deferReply();
+    if (game[interaction.guildId]) return await interaction.editReply("已有存在遊戲");
 
-    const name = interaction.options.getString("名稱").trim();
-    if (name.length < 2 || name.length > 30) return await interaction.editReply("列表名稱長度需在 2 ~ 30 字元之間");
-    if (game[interaction.guildId]) return await interaction.reply(`❌ ${interaction.user} 遊戲進行中，此操作已禁止`);
+    // 刪除現有播放儲列
+    const old_queue = player.getQueue(interaction.guildId);
+    if (old_queue) old_queue.destroy();
 
+    const timeout = +interaction.options.getString("秒數") || 60;
+
+    // 建立新的播放儲列
+    const name = interaction.options.getString("列表").trim();
     const list = await client.get(`${interaction.guildId}-${name}`);
     if (!list) return await interaction.editReply("此列表並不存在");
     if (!list.list.length) return await interaction.editReply("此列表沒有任何項目");
+
+    await interaction.editReply("稍等一下喔");
 
     const queue = await player.createQueue(interaction.guildId, { metadata: interaction.channel });
     try {
@@ -36,11 +45,17 @@ async function run({ game, player, interaction }) {
         if (res.playlist) tracks.push(...res.tracks);
         else tracks.push(res.tracks[0]);
     }
+    for (let i = tracks.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [tracks[i], tracks[j]] = [tracks[j], tracks[i]];
+    }
     await queue.addTracks(tracks);
 
-    if (!queue.playing) await queue.play();
-
-    return await interaction.editReply(`已加入 **${tracks.length}** 個項目`);
+    const gm = new GM(queue, interaction.guildId, tracks, game, timeout);
+    queue.game = gm;
+    game[interaction.guildId] = gm;
+    await interaction.editReply(`✅ ${interaction.user} 已經開始遊戲\n使用資料碟：${name}`);
+    await gm.start();
 }
 
 module.exports = { data, run };

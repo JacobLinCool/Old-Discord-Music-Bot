@@ -9,7 +9,7 @@ end HELLO;`,
     bash: `#!/bin/sh  echo "Hello, World!"`,
     c: `#include <stdio.h>
 int main(void){
-    printf("Hello, world!\n");
+    printf("Hello, world!\\n");
     return 0;
 }`,
     "c#": `using System;
@@ -21,7 +21,7 @@ class HelloWorld{
     "c++": `#include <iostream>
  
 int main(){
-	std::cout << "Hello, World!\n";
+	std::cout << "Hello, World!\\n";
 }`,
     dart: `main() {
   print('Hello World!');

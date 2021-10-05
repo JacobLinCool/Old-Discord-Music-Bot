@@ -5,11 +5,12 @@ const data = new SlashCommandSubcommandBuilder()
     .setDescription("跳轉至正在播放歌曲的某時間點")
     .addStringOption((option) => option.setName("時間").setDescription("要跳轉的目標時間 mm:ss").setRequired(true));
 
-async function run({ player, interaction }) {
+async function run({ game, player, interaction }) {
     await interaction.deferReply();
     const queue = player.getQueue(interaction.guildId);
 
     if (!queue || !queue.playing) return await interaction.editReply(`❌ ${interaction.user} 目前沒有正在播放的歌曲喔`);
+    if (game[interaction.guildId]) return await interaction.reply(`❌ ${interaction.user} 遊戲進行中，此操作已禁止`);
 
     let time = 0;
     const args = interaction.options

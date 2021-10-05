@@ -1,15 +1,15 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const fs = require("fs");
 
-const data = new SlashCommandBuilder().setName("mz").setDescription("音樂系統主指令");
+const data = new SlashCommandBuilder().setName("game").setDescription("遊戲系統主指令");
 
 const subcommands = {};
 
-fs.readdirSync(__dirname + "/music")
+fs.readdirSync(__dirname + "/game")
     .filter((f) => f.endsWith(".js") && f !== "index.js")
     .forEach((fp) => {
-        console.log(`註冊子指令 mz ${fp}`);
-        const sub = require(`./music/${fp}`);
+        console.log(`註冊子指令 game ${fp}`);
+        const sub = require(`./game/${fp}`);
         data.addSubcommand(() => sub.data);
         subcommands[sub.data.name] = sub;
     });

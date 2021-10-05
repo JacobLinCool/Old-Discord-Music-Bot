@@ -2,9 +2,10 @@ const { SlashCommandSubcommandBuilder } = require("@discordjs/builders");
 
 const data = new SlashCommandSubcommandBuilder().setName("skip").setDescription("跳過正在播放的歌曲");
 
-async function run({ player, interaction }) {
+async function run({ game, player, interaction }) {
     const queue = player.getQueue(interaction.guildId);
     if (!queue || !queue.playing) return await interaction.reply(`❌ ${interaction.user} 目前沒有正在播放的歌曲喔`);
+    if (game[interaction.guildId]) return await interaction.reply(`❌ ${interaction.user} 遊戲進行中，此操作已禁止`);
 
     const success = queue.skip();
 

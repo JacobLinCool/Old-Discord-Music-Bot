@@ -2,7 +2,7 @@ const { SlashCommandSubcommandBuilder } = require("@discordjs/builders");
 const Client = require("@replit/database");
 const ENV = require("dotenv").config().parsed || {};
 
-const client = new Client(ENV.REPLIT_DB_URL || process.env.REPLIT_DB_URL);
+const client = new Client(process.env.REPLIT_DB_URL || ENV.REPLIT_DB_URL);
 
 const data = new SlashCommandSubcommandBuilder()
     .setName("delete")
