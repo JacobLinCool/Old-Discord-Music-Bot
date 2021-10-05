@@ -35,7 +35,7 @@ async function run({ player, interaction }) {
     }
 
     const old_length = list.list.length;
-    list.list = list.list.concat([...new Set(id.filter((x) => x.length === 11))]);
+    list.list = [...new Set(list.list.concat(id.filter((x) => x.length === 11)))];
     const add_length = list.list.length - old_length;
 
     await client.set(`${interaction.guildId}-${name}`, list);
