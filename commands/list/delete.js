@@ -4,19 +4,22 @@ const ENV = require("dotenv").config().parsed || {};
 
 const client = new Client(ENV.REPLIT_DB_URL || process.env.REPLIT_DB_URL);
 
-const data = new SlashCommandSubcommandBuilder().setName("delete").setDescription("刪除列表 X");
+const data = new SlashCommandSubcommandBuilder()
+    .setName("delete")
+    .setDescription("刪除列表")
+    .addStringOption((option) => option.setName("名稱").setDescription("列表名稱").setRequired(true));
 
 async function run({ interaction }) {
     await interaction.deferReply();
 
-    const result = await client.list(`${interaction.guildId}`);
+    const name = interaction.options.getString("名稱").trim();
+    if (name.length < 2 || name.length > 30) return await interaction.editReply("列表名稱長度需在 2 ~ 30 字元之間");
 
-    if (result.length === 0) return await interaction.editReply(`未有任何列表`);
+    const list = await client.get(`${interaction.guildId}-${name}`);
+    if (!list) return await interaction.editReply("此列表並不存在");
 
-    let response = `共有 **${result.length}** 個列表\n`;
-    for (let i = 0; i < result.length; i++) response += `**${i + 1}.** ${result[i].name} (${result[i].list.length} 個項目)\n`;
-
-    await interaction.editReply(response);
+    await client.delete(`${interaction.guildId}-${name}`);
+    await interaction.editReply(`列表「**${name}**」已刪除 - 已刪除 **${list.list.length}** 個項目`);
 }
 
 module.exports = { data, run };

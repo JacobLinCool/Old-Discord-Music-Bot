@@ -8,7 +8,7 @@ const subcommands = {};
 fs.readdirSync(__dirname + "/list")
     .filter((f) => f.endsWith(".js") && f !== "index.js")
     .forEach((fp) => {
-        console.log(`註冊子指令 list ${fp}`);
+        console.log(`註冊子指令 ls ${fp}`);
         const sub = require(`./list/${fp}`);
         data.addSubcommand(() => sub.data);
         subcommands[sub.data.name] = sub;
