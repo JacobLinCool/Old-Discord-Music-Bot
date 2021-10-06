@@ -18,8 +18,8 @@ async function run({ player, interaction }) {
     if (name.length < 2 || name.length > 30) return await interaction.editReply("列表名稱長度需在 2 ~ 30 字元之間");
     if (await client.get(`${interaction.guildId}-${name}`)) return await interaction.editReply("此列表名稱已存在");
 
-    const raw = interaction.options
-        .getString("youtube_id")
+    const raw = (interaction.options
+        .getString("youtube_id") || "")
         .split(",")
         .map((x) => x.trim());
     const id = [];

@@ -18,7 +18,7 @@ async function run({ game, player, interaction }) {
         if (result) {
             const p = queue.game.game.players.find((p) => p.user.id === interaction.user.id);
             if (p) p.points += 1;
-            else p.points = 1;
+            else queue.game.game.players.push({ user: interaction.user, points: 1 });
             return await interaction.editReply(`✅ ${interaction.user} 回答正確！\n${result}`);
         } else return await interaction.editReply({ content: `❌ ${interaction.user} 回答錯誤`, ephemeral: true });
     }

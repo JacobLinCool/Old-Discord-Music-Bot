@@ -17,6 +17,7 @@ async function run({ interaction }) {
 
     const list = await client.get(`${interaction.guildId}-${name}`);
     if (!list) return await interaction.editReply("此列表並不存在");
+    if(!list.list.length) return await interaction.editReply("此列表中無任何項目");
 
     let response = `列表「**${list.name}**」的項目：\n`;
     for (let i = 0; i < list.list.length; i++) response += `**${i + 1}.** https://www.youtube.com/watch?v=${list.list[i]}\n`;

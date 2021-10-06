@@ -1,5 +1,6 @@
 const { SlashCommandSubcommandBuilder } = require("@discordjs/builders");
 const { QueryType } = require("discord-player");
+const fetch = require("node-fetch");
 const Client = require("@replit/database");
 const ENV = require("dotenv").config().parsed || {};
 
@@ -22,13 +23,14 @@ async function run({ player, interaction }) {
             _list = JSON.parse(input);
         } catch {
             const req = await fetch(input);
-            if (!req.ok) throw new Error();
+            if (!req.ok) throw new Error(req.status);
             _list = await req.json();
         }
         if (typeof _list.name !== "string" || !Array.isArray(_list.list)) throw new Error();
         list.name = _list.name;
         list.list = _list.list;
     } catch (err) {
+        console.log(err);
         return await interaction.editReply("資料格式不符");
     }
 

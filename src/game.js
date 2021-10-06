@@ -53,17 +53,20 @@ class GM {
         } catch (err) {
             console.error(err);
         }
+        this.ended = true;
     }
 
     async go() {
         const self = this;
         await new Promise((r) => {
-            setTimeout(r, self.timeout * 1000);
+            setTimeout(async() => {
+                r();
+                if(!self.ended) self.queue.metadata.send("沒人回答，跳過了一首歌");
+            }, self.timeout * 1000);
             self.pass = r;
         });
         if (!this.queue) return;
         this.queue.skip();
-        await this.queue.metadata.send("沒人回答，跳過了一首歌");
         if (this.queue.tracks.length > 0) this.go();
         else this.end();
     }
