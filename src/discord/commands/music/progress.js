@@ -13,6 +13,18 @@ async function run({ game, player, interaction }) {
     if (timestamp.progress === "Infinity") return await interaction.reply({ content: "這是現場直播", ephemeral: true });
 
     await interaction.reply({ content: `${progress} (**${timestamp.progress}%**)`, ephemeral: true });
+
+    const currentTitle = queue.current.title;
+    while (currentTitle === queue.current.title) {
+        try {
+            const progress = queue.createProgressBar();
+            const timestamp = queue.getPlayerTimestamp();
+            await interaction.editReply({ content: `${progress} (**${timestamp.progress}%**)`, ephemeral: true });
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+        } catch (err) {
+            break;
+        }
+    }
 }
 
 module.exports = { data, run };

@@ -9,6 +9,7 @@
         "format": "prettier --write index.js \"src/**/*.js\""
     },
     "dependencies": {
+        "@discord-player/downloader": "^3.0.1",
         "@discord-player/extractor": "^3.0.2",
         "@discordjs/builders": "^0.6.0",
         "@discordjs/opus": "^0.6.0",
@@ -42,5 +43,11 @@
     "bugs": {
         "url": "https://github.com/JacobLinCool/Discord-Bot/issues"
     },
-    "homepage": "https://github.com/JacobLinCool/Discord-Bot#readme"
+    "homepage": "https://github.com/JacobLinCool/Discord-Bot#readme",
+    "optionalDependencies": {
+        "bufferutil": "^4.0.4",
+        "erlpack": "github:discord/erlpack",
+        "utf-8-validate": "^5.0.6",
+        "zlib-sync": "^0.1.7"
+    }
 }
