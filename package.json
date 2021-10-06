@@ -1,46 +1,46 @@
 {
-  "name": "discord-bot",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "author": "JacobLinCool",
-  "scripts": {
-    "start": "node index.js",
-    "format": "prettier --write \"src/**/*.js\" \"events/**/*.js\" \"commands/**/*.js\""
-  },
-  "dependencies": {
-    "@discord-player/extractor": "^3.0.2",
-    "@discordjs/builders": "^0.6.0",
-    "@discordjs/opus": "^0.5.3",
-    "@discordjs/rest": "^0.1.0-canary.0",
-    "@replit/database": "^2.0.1",
-    "discord-player": "^5.1.0",
-    "discord.js": "^13.1.0",
-    "dotenv": "^10.0.0",
-    "ffmpeg-static": "^4.4.0",
-    "koa": "^2.13.3",
-    "koa-router": "^10.1.1",
-    "node-fetch": "^2.6.5",
-    "opusscript": "0.0.8",
-    "os-utils": "0.0.14"
-  },
-  "devDependencies": {
-    "discord-api-types": "^0.23.1",
-    "node": "^16.10.0",
-    "prettier": "^2.4.1"
-  },
-  "engines": {
-    "node": "16.x",
-    "npm": "*"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JacobLinCool/Discord-Bot.git"
-  },
-  "keywords": [],
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JacobLinCool/Discord-Bot/issues"
-  },
-  "homepage": "https://github.com/JacobLinCool/Discord-Bot#readme"
+    "name": "discord-bot",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "author": "JacobLinCool",
+    "scripts": {
+        "start": "node index.js",
+        "format": "prettier --write index.js \"src/**/*.js\""
+    },
+    "dependencies": {
+        "@discord-player/extractor": "^3.0.2",
+        "@discordjs/builders": "^0.6.0",
+        "@discordjs/opus": "^0.6.0",
+        "@discordjs/rest": "^0.1.0-canary.0",
+        "@replit/database": "^2.0.1",
+        "discord-player": "^5.1.0",
+        "discord.js": "^13.1.0",
+        "dotenv": "^10.0.0",
+        "ffmpeg-static": "^4.4.0",
+        "koa": "^2.13.3",
+        "koa-router": "^10.1.1",
+        "node-fetch": "^2.6.5",
+        "systeminformation": "^5.9.4",
+        "youtube-dl-exec": "^1.2.14"
+    },
+    "devDependencies": {
+        "discord-api-types": "^0.23.1",
+        "node": "^16.10.0",
+        "prettier": "^2.4.1"
+    },
+    "engines": {
+        "node": "16.x",
+        "npm": "*"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JacobLinCool/Discord-Bot.git"
+    },
+    "keywords": [],
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/JacobLinCool/Discord-Bot/issues"
+    },
+    "homepage": "https://github.com/JacobLinCool/Discord-Bot#readme"
 }
