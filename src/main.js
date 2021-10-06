@@ -1,51 +1,15 @@
-const { readdirSync } = require("fs");
-const { setup } = require("./setup");
-const { registerPlayerEvents } = require("./events");
-const { registerCommands } = require("./commands");
+async function run() {
+    process.stdout.write("程式開始執行\n");
+    require("./initialize")();
 
-function run(cfg) {
-    const { config, client, player } = setup(cfg);
-    const game = {};
+    const dc = require("./discord");
+    const start_time = await dc.setup();
 
-    registerEventHandler(config, client, player, game);
-    registerPlayerEvents(player);
-    registerCommands(config, client);
-
-    client.login(config.token);
-
-    return {
-        start: new Date(),
-        client,
-        player,
-        config,
-        game,
-    };
-}
-
-function registerEventHandler(config, client, player, game) {
-    console.log(`正在載入事件處理器...`);
-
-    const events = readdirSync("./events/").filter((file) => file.endsWith(".js"));
-
-    for (const file of events) {
-        const name = file.split(".")[0];
-        console.log(`>> 載入事件處理器: ${name}`);
-        const path = `../events/${file}`;
-        try {
-            const handler = require(path);
-            client.on(name, (...args) => {
-                try {
-                    handler({ config, client, player, game }, ...args);
-                } catch (err) {}
-            });
-            delete require.cache[require.resolve(path)];
-        } catch (err) {
-            console.error(`>> ❌ 事件處理器 ${name} 載入失敗`);
-            console.error(err);
-        }
-    }
-
-    console.log("事件處理器載入完畢");
+    const web = require("./web");
+    web.use(async (ctx, next) => {
+        ctx.body += `伺服器啟動時間: ${start_time}\n`;
+        next();
+    });
 }
 
 exports.run = run;
