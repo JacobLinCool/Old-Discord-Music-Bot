@@ -5,8 +5,8 @@ const client = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES],
     disableMentions: "everyone",
 });
-const playerOptions = { 
-    // ytdlOptions: { quality: "highestaudio" } 
+const playerOptions = {
+    ytdlOptions: { highWaterMark: 1 << 26 },
 };
 const player = new Player(client, playerOptions);
 const downloader = require("@discord-player/downloader").Downloader;

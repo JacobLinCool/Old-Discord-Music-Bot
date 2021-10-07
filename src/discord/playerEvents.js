@@ -1,8 +1,13 @@
+const { QueryType } = require("discord-player");
 function register(player) {
     process.stdout.write("註冊播放器事件...");
 
     player.on("trackStart", (queue, track) => {
         queue.metadata.send(`🎧 開始在 **${queue.connection.channel.name}** 播放 ${track.title}`);
+    });
+
+    player.on("trackEnd", (queue, track) => {
+        console.log("[DEBUG] TRACK END");
     });
 
     player.on("botDisconnect", (queue) => {
@@ -22,7 +27,7 @@ function register(player) {
         console.log(`發生錯誤: ${error.message}`);
         const query = queue.current.title;
         console.time(">> Youtube Search - " + query);
-        const res = await player.search(query, { requestedBy: interaction.member, searchEngine: QueryType.AUTO });
+        const res = await player.search(query, { requestedBy: queue.current.requestedBy, searchEngine: QueryType.AUTO });
         console.timeEnd(">> Youtube Search - " + query);
         if (res && res.tracks.length) {
             queue.insert(res.tracks[0], 0);
