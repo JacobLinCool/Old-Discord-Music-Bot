@@ -5,7 +5,10 @@ const client = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES],
     disableMentions: "everyone",
 });
-const player = new Player(client, { ytdlOptions: { quality: "highestaudio", highWaterMark: 1 << 25 } });
+const playerOptions = { 
+    // ytdlOptions: { quality: "highestaudio" } 
+};
+const player = new Player(client, playerOptions);
 const downloader = require("@discord-player/downloader").Downloader;
 player.use("YOUTUBE_DL", downloader);
 

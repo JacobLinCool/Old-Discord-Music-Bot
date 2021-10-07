@@ -12,7 +12,7 @@ async function run({ player, interaction }) {
     if (!queue || !queue.playing) return await interaction.editReply({ content: `❌ ${interaction.user} 目前沒有正在播放的歌曲喔`, ephemeral: true });
 
     const vol = +interaction.options.getString("音量");
-    if (!vol) return await interaction.editReply(`🔊 目前音量是 ${queue.volume}% \n如要改變音量請加上 1 ~ 200 之參數`);
+    if (!vol) return await interaction.editReply({ content: `🔊 目前音量是 ${queue.volume}% \n如要改變音量請加上 1 ~ 200 之參數`, ephemeral: true });
 
     if (queue.volume === vol) return await interaction.editReply(`❌ ${interaction.user} 目前的音量已經是 ${vol}% 了喔`);
     if (vol < 0 || vol > 200) return await interaction.editReply(`❌ ${interaction.user} 可接受的音量範圍是 0 ~ 200`);

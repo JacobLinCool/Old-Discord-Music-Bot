@@ -34,15 +34,20 @@ async function run({ game, player, interaction }) {
 
     const tracks = [];
     for (let i = 0; i < list.list.length; i++) {
-        const res = await player.search("https://www.youtube.com/watch?v=" + list.list[i], {
-            requestedBy: interaction.member,
-            searchEngine: QueryType.YOUTUBE_VIDEO,
-        });
-        if (!res || !res.tracks.length) continue;
-        if (res.playlist) tracks.push(...res.tracks);
-        else tracks.push(res.tracks[0]);
+        console.time(">> Youtube Search - " + list.list[i]);
+        tracks.push(
+            await player.search(list.list[i], {
+                requestedBy: interaction.member,
+                searchEngine: QueryType.YOUTUBE_VIDEO,
+            }).then(res => {
+                if (!res || !res.tracks.length) return [];
+                return res.tracks;
+            })
+        );
+        console.timeEnd(">> Youtube Search - " + list.list[i]);
     }
-    await queue.addTracks(tracks);
+    const answers = (await Promise.all(tracks)).flat(1);
+    await queue.addTracks(answers);
 
     if (!queue.playing) await queue.play();
 

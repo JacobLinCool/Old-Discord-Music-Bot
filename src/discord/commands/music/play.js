@@ -11,7 +11,10 @@ async function run({ game, player, interaction }) {
 
     if (game[interaction.guildId]) return await interaction.editReply(`❌ ${interaction.user} 遊戲進行中，此操作已禁止`);
 
-    const res = await player.search(interaction.options.getString("url"), { requestedBy: interaction.member, searchEngine: QueryType.AUTO });
+    const query = interaction.options.getString("url");
+    console.time(">> Youtube Search - " + query);
+    const res = await player.search(query, { requestedBy: interaction.member, searchEngine: QueryType.AUTO });
+    console.timeEnd(">> Youtube Search - " + query);
     if (!res || !res.tracks.length) return await interaction.editReply(`❌ ${interaction.user} 無相符之查詢結果`);
 
     const queue = await player.createQueue(interaction.guildId, { metadata: interaction.channel });

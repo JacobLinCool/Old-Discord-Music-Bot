@@ -6,7 +6,8 @@
     "author": "JacobLinCool",
     "scripts": {
         "start": "node index.js",
-        "format": "prettier --write index.js \"src/**/*.js\""
+        "format": "prettier --write index.js \"src/**/*.js\"",
+        "speed": "speed-test"
     },
     "dependencies": {
         "@discord-player/downloader": "^3.0.1",
@@ -46,7 +47,6 @@
     "homepage": "https://github.com/JacobLinCool/Discord-Bot#readme",
     "optionalDependencies": {
         "bufferutil": "^4.0.4",
-        "erlpack": "github:discord/erlpack",
         "utf-8-validate": "^5.0.6",
         "zlib-sync": "^0.1.7"
     }
