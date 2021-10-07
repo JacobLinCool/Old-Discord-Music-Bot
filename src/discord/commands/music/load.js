@@ -36,13 +36,15 @@ async function run({ game, player, interaction }) {
     for (let i = 0; i < list.list.length; i++) {
         console.time(">> Youtube Search - " + list.list[i]);
         tracks.push(
-            await player.search(list.list[i], {
-                requestedBy: interaction.member,
-                searchEngine: QueryType.YOUTUBE_VIDEO,
-            }).then(res => {
-                if (!res || !res.tracks.length) return [];
-                return res.tracks;
-            })
+            await player
+                .search(list.list[i], {
+                    requestedBy: interaction.member,
+                    searchEngine: QueryType.YOUTUBE_VIDEO,
+                })
+                .then((res) => {
+                    if (!res || !res.tracks.length) return [];
+                    return res.tracks;
+                }),
         );
         console.timeEnd(">> Youtube Search - " + list.list[i]);
     }
